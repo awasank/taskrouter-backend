@@ -260,11 +260,34 @@ getGrToken = async (req, res) => {
 
 acceptRejectReservation =async(req, res) => {
     console.log("Accept/Reject Reservation")
-    return res.status(200).json({
-        success: true,
-        message: "Reservation Accepted/Rejected",
-        token: "Hello"
-    })
+
+    if (body.request == true){
+        client.taskrouter.workspaces(process.env.WORKSPACE_SID)
+                 .tasks(body.taskSID)
+                 .reservations(body.reservationSID)
+                 .update({reservationStatus: 'accepted'})
+                 .then(reservation => 
+                    console.log(reservation.workerName) 
+                );
+
+        return res.status(200).json({
+            success: true,
+            message: "Accepted",
+            token: "Hello"
+        });
+    }else{
+        client.taskrouter.workspaces(process.env.WORKSPACE_SID)
+                 .tasks(body.taskSID)
+                 .reservations(body.reservationSID)
+                 .update({reservationStatus: 'rejected'})
+                 .then(reservation => console.log(reservation.workerName));
+
+        return res.status(200).json({
+            success: true,
+            message: "Rejected",
+            token: "Hello"
+        });
+    }
 }
 
 endConference = async (req , res) => {
