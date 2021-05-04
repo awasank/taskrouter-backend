@@ -262,7 +262,7 @@ acceptRejectReservation =async(req, res) => {
     console.log("Accept/Reject Reservation")
 
     if (body.request == true){
-        client.taskrouter.workspaces(process.env.WORKSPACE_SID)
+        await client.taskrouter.workspaces(process.env.WORKSPACE_SID)
                  .tasks(body.taskSID)
                  .reservations(body.reservationSID)
                  .update({reservationStatus: 'accepted'})
@@ -276,7 +276,7 @@ acceptRejectReservation =async(req, res) => {
             token: "Hello"
         });
     }else{
-        client.taskrouter.workspaces(process.env.WORKSPACE_SID)
+        await client.taskrouter.workspaces(process.env.WORKSPACE_SID)
                  .tasks(body.taskSID)
                  .reservations(body.reservationSID)
                  .update({reservationStatus: 'rejected'})
